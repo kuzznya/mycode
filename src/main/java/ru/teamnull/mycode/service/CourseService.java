@@ -14,7 +14,7 @@ import java.util.UUID;
 public class CourseService {
     private final CourseRepository courseRepository;
 
-    public List<Course> allCourses() {
+    public List<Course> getAllCourses() {
         return courseRepository.findAll();
     }
 
