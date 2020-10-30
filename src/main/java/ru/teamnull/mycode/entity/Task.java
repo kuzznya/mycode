@@ -1,5 +1,6 @@
 package ru.teamnull.mycode.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,4 +29,8 @@ public class Task {
     private int memoryLimit;
     private TestType testType;
     private PostprocessorType postprocessorType;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL)
+    List<Test> tests;
 }
