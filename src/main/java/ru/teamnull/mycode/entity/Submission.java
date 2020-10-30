@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import ru.teamnull.mycode.model.SubmissionStatus;
 
 import javax.persistence.*;
@@ -23,9 +25,11 @@ public class Submission {
     @GeneratedValue
     @JsonIgnore
     private UUID id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Task task;
     @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
     private Date timestamp;
     private SubmissionStatus status;
