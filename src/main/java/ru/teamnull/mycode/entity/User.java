@@ -3,12 +3,10 @@ package ru.teamnull.mycode.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.teamnull.mycode.model.Role;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.lang.annotation.Target;
+import javax.persistence.*;
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -21,5 +19,12 @@ public class User {
     @GeneratedValue
     private UUID id;
     private String username;
-
+    private String password;
+    private String name;
+    private String surname;
+    private String middlename;
+    private String email;
+    private Date birthDate;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
