@@ -1,15 +1,18 @@
 package ru.teamnull.mycode.entity;
 
-import jdk.jfr.Enabled;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.lang.annotation.Target;
 import java.util.UUID;
 
-@Entity
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "USER_ENTITY")
@@ -18,6 +21,5 @@ public class User {
     @GeneratedValue
     private UUID id;
     private String username;
-    private String name;
-    private String surname;
+
 }
