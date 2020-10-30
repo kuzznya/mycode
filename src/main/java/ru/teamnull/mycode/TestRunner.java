@@ -50,7 +50,8 @@ public class TestRunner implements CommandLineRunner {
                 List.of(new Sample(null, "1", "5")),
                 new Date(), 5.0f, 5,
                 TestType.TEST,
-                PostprocessorType.EASY
+                PostprocessorType.EASY,
+                Collections.emptyList()
         );
         taskRepository.save(task);
         Submission submission = Submission.builder()
