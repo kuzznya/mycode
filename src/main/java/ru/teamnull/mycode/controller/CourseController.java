@@ -1,2 +1,4 @@
-package ru.teamnull.mycode;public class CourseController {
+package ru.teamnull.mycode.controller;
+
+public class CourseController {
 }

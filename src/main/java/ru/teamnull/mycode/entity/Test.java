@@ -1,2 +1,15 @@
-package ru.teamnull.mycode.entity;public class Test {
+package ru.teamnull.mycode.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Test {
+    private int number;
+    private String input;
+    private String output;
 }
