@@ -33,6 +33,8 @@ public class Task {
     private PostprocessorType postprocessorType;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     List<Test> tests;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    Validation validation;
 }

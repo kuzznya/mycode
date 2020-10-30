@@ -21,6 +21,6 @@ public class Validation {
     private String generator;
     private String validator;
     private int testCount;
-    @OneToOne(orphanRemoval = true)
+    @OneToOne
     private Task task;
 }

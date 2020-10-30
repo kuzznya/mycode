@@ -34,6 +34,6 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
     private Group group;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Submission> submissions;
 }
