@@ -28,7 +28,7 @@ public class TestRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Group group = new Group(null, "M3205", Collections.emptyList());
+        Group group = new Group(null, "M3205", Collections.emptyList(), Collections.emptyList());
         groupRepository.save(group);
         User user = new User(
                 null,
@@ -46,6 +46,7 @@ public class TestRunner implements CommandLineRunner {
         userRepository.save(user);
         Task task = new Task(
                 null,
+                Collections.emptyList(),
                 "test",
                 List.of(new Sample(null, "1", "5")),
                 new Date(), 5.0f, 5,

@@ -21,6 +21,8 @@ public class Task {
     @Id
     @GeneratedValue
     private UUID id;
+    @ManyToMany
+    private List<Group> groups;
     private String problem;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Sample> samples;

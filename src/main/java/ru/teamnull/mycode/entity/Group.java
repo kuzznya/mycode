@@ -24,6 +24,8 @@ public class Group {
     private UUID id;
     private String name;
 
+    @ManyToMany
+    private List<Task> tasks;
     @OneToMany
     @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class)
     private List<User> students;
