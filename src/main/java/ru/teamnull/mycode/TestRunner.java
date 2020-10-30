@@ -68,6 +68,6 @@ public class TestRunner implements CommandLineRunner {
         submissionRepository.deleteById(submission1.getId());
         taskRepository.deleteById(task.getId());
         userRepository.getOne(user.getId());
-//        userRepository.deleteById(user.getId());
+        userRepository.deleteById(user.getId());
     }
 }
