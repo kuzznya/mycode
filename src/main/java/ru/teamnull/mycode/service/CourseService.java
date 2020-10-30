@@ -14,12 +14,14 @@ import java.util.UUID;
 public class CourseService {
     private final CourseRepository courseRepository;
 
-    public List<Course> allCourses () {
+    public List<Course> allCourses() {
         return courseRepository.findAll();
     }
 
     public Course findById(UUID uuid) {
-        return courseRepository.findById(uuid).orElseThrow(EntityNotFoundException::new);
+        return courseRepository
+                .findById(uuid)
+                .orElseThrow(EntityNotFoundException::new);
     }
 
 
