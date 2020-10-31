@@ -29,8 +29,15 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/sign-up")
-    public User register(@RequestBody User user) {
-        return userService.register(user);
+    public ResponseEntity<User> register(@RequestBody User user) {
+        User registeredUser = userService.register(user);
+
+        String plainCredentials = user.getUsername() + ":" + user.getPassword();
+        String base64Credentials = Base64.getEncoder().encodeToString(plainCredentials.getBytes());
+
+        return ResponseEntity.ok()
+                .header("Authorization", "Basic " + base64Credentials)
+                .body(registeredUser);
     }
 
     @PostMapping("/sign-in")
