@@ -88,7 +88,7 @@ int main(int argc, char** argv)
     // CE
     if (ret_val != 0)
     {
-        printf("Compilation Error\n");
+        printf("1\n");
         remove_dump(solution);
         return 0;
     }
@@ -136,22 +136,27 @@ int main(int argc, char** argv)
         int cmp = system( command.c_str() );
         if (cmp != 0)
         {
-            printf("Wrong Answer\n");
+            printf("3\n");
         }
         else
         {
-            printf("OK\n");
+            printf("2\n");
         }
     }
     else
     {
-        if (verdict_out == "Memory Limit Exceeded" || verdict_out == "Time Limit Exceeded")
+        if (verdict_out == "Memory Limit Exceeded")// || verdict_out == "Time Limit Exceeded")
         {
-            printf( "%s\n", verdict_out.c_str() );
+            //printf( "%s\n", verdict_out.c_str() );
+            printf("4\n");
+        }
+        else if (verdict_out == "Time Limit Exceeded")
+        {
+            printf("5\n");
         }
         else
         {
-            printf("Runtime Error\n");
+            printf("6\n");
         }
     }
     
