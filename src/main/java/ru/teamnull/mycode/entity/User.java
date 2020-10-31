@@ -20,7 +20,7 @@ import java.util.*;
 @NoArgsConstructor
 @Table(name = "USER_ENTITY")
 @JsonIdentityReference(alwaysAsId = true)
-public class User implements UserDetails {
+public class User {
     @Id
     @GeneratedValue
     private UUID id;
@@ -54,39 +54,43 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    @Override
     @JsonIgnore
-    public String getPassword() {
-        return "{noop}" + password;
-    }
+    public UserDetails getDetails() {
+        return new UserDetails() {
+            @Override
+            public String getUsername() {
+                return username;
+            }
 
-    @Override
-    @JsonIgnore
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
-    }
+            @Override
+            public String getPassword() {
+                return password;
+            }
 
-    @Override
-    @JsonIgnore
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+            @Override
+            public Collection<? extends GrantedAuthority> getAuthorities() {
+                return List.of(new SimpleGrantedAuthority(role.name()));
+            }
 
-    @Override
-    @JsonIgnore
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+            @Override
+            public boolean isAccountNonExpired() {
+                return true;
+            }
 
-    @Override
-    @JsonIgnore
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+            @Override
+            public boolean isAccountNonLocked() {
+                return true;
+            }
 
-    @Override
-    @JsonIgnore
-    public boolean isEnabled() {
-        return true;
+            @Override
+            public boolean isCredentialsNonExpired() {
+                return true;
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return true;
+            }
+        };
     }
 }
