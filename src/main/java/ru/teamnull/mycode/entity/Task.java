@@ -35,12 +35,15 @@ public class Task {
     @OrderBy
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date deadline;
+
+    @OneToMany
+    private List<Submission> submissions;
+
     private float timeLimit;
     private int memoryLimit;
     private CheckType checkType;
     private PostprocessorType postprocessorType;
 
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     private List<Test> tests;

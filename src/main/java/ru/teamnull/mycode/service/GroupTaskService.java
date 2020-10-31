@@ -23,7 +23,7 @@ public class GroupTaskService {
                     .stream()
                     .map(Group::getId)
                     .collect(Collectors.toList()),
-                    new TaskDto(task.getId(), task.getProblem(), task.getDeadline())));
+                    new TaskDto(task.getId(), task.getName(), task.getProblem(), task.getDeadline())));
         return groupTasks;
     }
 }

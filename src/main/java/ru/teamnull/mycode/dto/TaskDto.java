@@ -13,6 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class TaskDto {
     private UUID id;
+    private String name;
     private String problem;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date deadline;
