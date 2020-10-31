@@ -14,7 +14,6 @@ import java.util.Base64;
 
 @RestController
 @AllArgsConstructor
-@CrossOrigin
 public class UserController {
 
     private final AuthService authService;

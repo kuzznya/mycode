@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController("/tasks")
 @AllArgsConstructor
-@CrossOrigin
 public class GroupTaskController {
     private final GroupTaskService groupTaskService;
 
