@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamnull.mycode.dto.GroupsTask;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController("/tasks")
 @AllArgsConstructor
+@CrossOrigin
 public class GroupTaskController {
     private final GroupTaskService groupTaskService;
 

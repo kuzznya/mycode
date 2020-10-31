@@ -15,6 +15,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/groups/{groupId}/tasks/{taskId}/tests")
 @AllArgsConstructor
+@CrossOrigin
 public class TestController {
     private final TestService testService;
     private final TaskService taskService;

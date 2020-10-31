@@ -16,6 +16,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/groups/{groupId}/tasks/{taskId}/validation")
 @AllArgsConstructor
+@CrossOrigin
 public class ValidationController {
     private final TaskService taskService;
 

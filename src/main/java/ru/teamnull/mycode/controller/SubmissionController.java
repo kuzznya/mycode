@@ -14,6 +14,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/tasks/{taskId}/submissions")
 @AllArgsConstructor
+@CrossOrigin
 public class SubmissionController {
 
     private final SubmissionService submissionService;
