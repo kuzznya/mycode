@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import ru.teamnull.mycode.model.Language;
@@ -35,6 +36,7 @@ public class Submission {
     @Lob
     private String code;
     private Language language;
+    @CreationTimestamp
     private Date timestamp;
     private SubmissionStatus status;
     @OneToMany(cascade = CascadeType.ALL)

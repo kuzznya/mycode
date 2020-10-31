@@ -1,12 +1,10 @@
 package ru.teamnull.mycode.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import ru.teamnull.mycode.model.Role;
 
 import javax.persistence.*;
@@ -30,6 +28,7 @@ public class User {
     private String surname;
     private String middlename;
     private String email;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthDate;
     @Enumerated(EnumType.STRING)
     private Role role;

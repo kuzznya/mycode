@@ -27,4 +27,9 @@ public class Group {
     private List<Task> tasks;
     @OneToMany(fetch = FetchType.EAGER)
     private Set<User> students;
+
+    @JsonCreator
+    public Group(@JsonProperty(value = "name", required = true) String name) {
+        this.name = name;
+    }
 }

@@ -1,9 +1,11 @@
 package ru.teamnull.mycode.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.core.annotation.Order;
 import ru.teamnull.mycode.model.PostprocessorType;
 import ru.teamnull.mycode.model.CheckType;
 
@@ -22,6 +24,7 @@ public class Task {
     @Id
     @GeneratedValue
     private UUID id;
+    private String name;
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Group> groups;
@@ -29,6 +32,8 @@ public class Task {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(FetchMode.SELECT)
     private List<Sample> samples;
+    @OrderBy
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date deadline;
     private float timeLimit;
     private int memoryLimit;

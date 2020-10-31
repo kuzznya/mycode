@@ -43,6 +43,7 @@ public class TestRunner implements CommandLineRunner {
         userRepository.save(user);
         Task task = new Task(
                 null,
+                "avl",
                 List.of(group),
                 "test",
                 List.of(new Sample(null, "1", "5")),
@@ -53,7 +54,7 @@ public class TestRunner implements CommandLineRunner {
                 null
         );
         taskRepository.save(task);
-        Test test = new Test(null, task, 5, "10 0", "10", 1.0f);
+        Test test = new Test(5, "10 0", "something", 1.0f);
         task.setTests(List.of(test));
         testRepository.save(test);
         group.setTasks(List.of(task));
