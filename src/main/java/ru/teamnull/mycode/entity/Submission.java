@@ -31,6 +31,8 @@ public class Submission {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
+    @Lob
+    private String code;
     private Date timestamp;
     private SubmissionStatus status;
     @OneToMany(cascade = CascadeType.ALL)
