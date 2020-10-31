@@ -24,6 +24,9 @@ public class TestChecker extends Checker {
         return tests.size();
     }
 
+    private static native int testCheck(float timeLimit, int memoryLimit,
+                                        String codePath, String inputPath, String outputPath);
+
     private SubmissionStatus testCheck(File codeFile,
                                        File inputFile,
                                        File outputFile,
