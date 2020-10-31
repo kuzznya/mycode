@@ -28,11 +28,6 @@ public class UserController {
                 .body(registeredUser);
     }
 
-    @RequestMapping(method = RequestMethod.OPTIONS, path = "/sign-in")
-    public ResponseEntity<?> signIn() {
-        return ResponseEntity.ok().build();
-    }
-
     @CrossOrigin(methods = RequestMethod.POST)
     @PostMapping("/sign-in")
     public ResponseEntity<User> signIn(@RequestBody SignInRequest request) {
