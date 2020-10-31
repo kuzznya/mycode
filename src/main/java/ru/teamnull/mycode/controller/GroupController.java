@@ -2,6 +2,7 @@ package ru.teamnull.mycode.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.teamnull.mycode.entity.Group;
@@ -30,6 +31,7 @@ public class GroupController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('TEACHER')")
     public Group addGroup(@RequestBody Group newGroup) {
         return groupService.add(newGroup);
     }

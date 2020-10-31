@@ -2,6 +2,7 @@ package ru.teamnull.mycode;
 
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.teamnull.mycode.entity.*;
 import ru.teamnull.mycode.model.PostprocessorType;
@@ -23,6 +24,8 @@ public class TestRunner implements CommandLineRunner {
     private final TestRepository testRepository;
     private final ValidationRepository validationRepository;
 
+//    private final PasswordEncoder passwordEncoder;
+
     @Override
     public void run(String... args) throws Exception {
         Group group = new Group(null, "M3205", Collections.emptyList(), Collections.emptySet());
@@ -30,6 +33,7 @@ public class TestRunner implements CommandLineRunner {
         User user = new User(
                 null,
                 "kuzznya",
+//                passwordEncoder.encode("test"),
                 "test",
                 "Ilya",
                 "Kuznetsov",

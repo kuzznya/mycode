@@ -5,7 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.teamnull.mycode.dto.GroupTask;
+import ru.teamnull.mycode.dto.GroupsTask;
 import ru.teamnull.mycode.service.GroupTaskService;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class GroupTaskController {
     }
 
     @GetMapping("/tasks")
-    public List<GroupTask> getGroupTasks() {
+    public List<GroupsTask> getGroupTasks() {
         return groupTaskService.getAll();
     }
 }
