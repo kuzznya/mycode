@@ -56,41 +56,11 @@ public class User {
 
     @JsonIgnore
     public UserDetails getDetails() {
-        return new UserDetails() {
-            @Override
-            public String getUsername() {
-                return username;
-            }
-
-            @Override
-            public String getPassword() {
-                return password;
-            }
-
-            @Override
-            public Collection<? extends GrantedAuthority> getAuthorities() {
-                return List.of(new SimpleGrantedAuthority(role.name()));
-            }
-
-            @Override
-            public boolean isAccountNonExpired() {
-                return true;
-            }
-
-            @Override
-            public boolean isAccountNonLocked() {
-                return true;
-            }
-
-            @Override
-            public boolean isCredentialsNonExpired() {
-                return true;
-            }
-
-            @Override
-            public boolean isEnabled() {
-                return true;
-            }
-        };
+        return org.springframework.security.core.userdetails.User
+                .builder()
+                .username(username)
+                .password(password)
+                .authorities(new SimpleGrantedAuthority(role.name()))
+                .build();
     }
 }

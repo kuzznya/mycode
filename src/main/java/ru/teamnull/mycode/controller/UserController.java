@@ -3,6 +3,7 @@ package ru.teamnull.mycode.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 import ru.teamnull.mycode.entity.User;
 import ru.teamnull.mycode.model.SignInRequest;
 import ru.teamnull.mycode.security.SecurityContextUserReceiver;
@@ -44,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping("/check-token")
-    public User checkToken() {
-        return receiver.getUser().block();
+    public Mono<User> checkToken() {
+        return receiver.getUser();
     }
 }

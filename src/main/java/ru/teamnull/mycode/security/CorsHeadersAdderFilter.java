@@ -16,6 +16,7 @@ public class CorsHeadersAdderFilter implements WebFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         exchange.getResponse().getHeaders().setAccessControlAllowOrigin("*");
+        exchange.getResponse().getHeaders().setAccessControlAllowHeaders(List.of("*"));
         exchange.getResponse().getHeaders().setAccessControlRequestHeaders(List.of("*"));
         exchange.getResponse().getHeaders().setAccessControlExposeHeaders(List.of("Authorization"));
         exchange.getResponse().getHeaders().setAccessControlMaxAge(3600);

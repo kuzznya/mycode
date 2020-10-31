@@ -16,7 +16,9 @@ public class SecurityContextUserReceiver {
     public Mono<User> getUser() {
         return ReactiveSecurityContextHolder
                 .getContext()
-                .map(context -> (String) context.getAuthentication().getPrincipal())
+                .map(context -> (org.springframework.security.core.userdetails.User)
+                        context.getAuthentication().getPrincipal())
+                .map(org.springframework.security.core.userdetails.User::getUsername)
                 .map(userService::findUser);
     }
 }
