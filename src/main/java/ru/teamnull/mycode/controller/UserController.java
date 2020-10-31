@@ -2,10 +2,7 @@ package ru.teamnull.mycode.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.teamnull.mycode.entity.User;
 import ru.teamnull.mycode.model.SignInRequest;
 import ru.teamnull.mycode.service.AuthService;
@@ -18,7 +15,7 @@ public class UserController {
 
     private final AuthService authService;
 
-    @CrossOrigin
+    @CrossOrigin(methods = RequestMethod.POST)
     @PostMapping("/sign-up")
     public ResponseEntity<User> register(@RequestBody User user) {
         User registeredUser = authService.register(user);
@@ -31,7 +28,12 @@ public class UserController {
                 .body(registeredUser);
     }
 
-    @CrossOrigin
+    @RequestMapping(method = RequestMethod.OPTIONS, path = "/sign-in")
+    public ResponseEntity<?> signIn() {
+        return ResponseEntity.ok().build();
+    }
+
+    @CrossOrigin(methods = RequestMethod.POST)
     @PostMapping("/sign-in")
     public ResponseEntity<User> signIn(@RequestBody SignInRequest request) {
         User user = authService.validateRequest(request);
