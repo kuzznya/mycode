@@ -26,6 +26,9 @@ public class Group {
     @JsonIgnore
     private List<Task> tasks;
     @OneToMany(fetch = FetchType.EAGER)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Set<User> students;
 
     @JsonCreator

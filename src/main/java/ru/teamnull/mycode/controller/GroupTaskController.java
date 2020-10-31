@@ -3,6 +3,7 @@ package ru.teamnull.mycode.controller;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.teamnull.mycode.dto.GroupsTask;
@@ -21,6 +22,7 @@ public class GroupTaskController {
     }
 
     @GetMapping("/tasks")
+    @PreAuthorize("hasRole('STUDENT')")
     public List<GroupsTask> getGroupTasks() {
         return groupTaskService.getAll();
     }
