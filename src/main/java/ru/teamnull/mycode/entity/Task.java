@@ -1,9 +1,7 @@
 package ru.teamnull.mycode.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import ru.teamnull.mycode.model.PostprocessorType;
@@ -16,6 +14,7 @@ import java.util.UUID;
 
 @Entity
 @Data
+@ToString(exclude = {"groups", "samples", "tests", "validation"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "TASK_ENTITY")
@@ -23,7 +22,7 @@ public class Task {
     @Id
     @GeneratedValue
     private UUID id;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Group> groups;
     private String problem;
@@ -42,4 +41,9 @@ public class Task {
     private List<Test> tests;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Validation validation;
+
+    @JsonIgnore
+    public List<Group> getGroups() {
+        return groups;
+    }
 }

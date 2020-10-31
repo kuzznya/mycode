@@ -43,7 +43,7 @@ public class TestRunner implements CommandLineRunner {
         userRepository.save(user);
         Task task = new Task(
                 null,
-                Collections.emptyList(),
+                List.of(group),
                 "test",
                 List.of(new Sample(null, "1", "5")),
                 new Date(), 5.0f, 5,
