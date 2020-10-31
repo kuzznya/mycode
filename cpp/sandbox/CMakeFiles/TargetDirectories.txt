@@ -1,0 +1,8 @@
+/Users/kalkolay/Desktop/sandbox/CMakeFiles/install/local.dir
+/Users/kalkolay/Desktop/sandbox/CMakeFiles/install/strip.dir
+/Users/kalkolay/Desktop/sandbox/CMakeFiles/install.dir
+/Users/kalkolay/Desktop/sandbox/CMakeFiles/permission.dir
+/Users/kalkolay/Desktop/sandbox/CMakeFiles/rebuild_cache.dir
+/Users/kalkolay/Desktop/sandbox/CMakeFiles/edit_cache.dir
+/Users/kalkolay/Desktop/sandbox/CMakeFiles/list_install_components.dir
+/Users/kalkolay/Desktop/sandbox/CMakeFiles/sandbox.dir
