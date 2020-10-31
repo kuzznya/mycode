@@ -108,14 +108,14 @@ int main(int argc, char** argv)
     }
     */
     
-    if (false) {
+    if (true) {
     command = "cat " + input + " | ./sandbox --cpu " + std::to_string(time_limit) + " --mem " + std::to_string(mem_limit) + " --usage " + verdict + " --exec ./" + solution + " > " + result;
     } else {
         command = "./sandbox --cpu " + std::to_string(time_limit) + " --mem " + std::to_string(mem_limit) + " --usage " + verdict + " --exec ./" + solution + " < " + input;
     }
     system( command.c_str() );
     
-    //debug
+    /*//debug
     printf("[DEBUG] Input:\n");
     command = "cat " + input;
     system( command.c_str() );
@@ -126,7 +126,7 @@ int main(int argc, char** argv)
     command = "cat " + output;
     system( command.c_str() );
     printf("[DEBUG]\n");
-    //debug
+    //debug*/
     
     // RE, TL, ML, WA, OK
     std::string verdict_out = parse_verdict(verdict);
