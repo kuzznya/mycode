@@ -18,6 +18,7 @@ import org.springframework.web.server.ServerWebExchange;
 import ru.teamnull.mycode.service.AuthService;
 
 import java.util.Arrays;
+import java.util.List;
 
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
@@ -48,14 +49,19 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("*");
-        corsConfiguration.setAllowedMethods(Arrays.asList(
-                HttpMethod.GET.name(),
-                HttpMethod.HEAD.name(),
-                HttpMethod.POST.name(),
-                HttpMethod.PUT.name(),
-                HttpMethod.DELETE.name(),
-                HttpMethod.OPTIONS.name()));
+//        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.setAllowedOrigins(List.of("*"));
+        corsConfiguration.setAllowedHeaders(List.of("*"));
+        corsConfiguration.setAllowedMethods(List.of("*"));
+        corsConfiguration.addExposedHeader("Authorization");
+        corsConfiguration.setAllowCredentials(true);
+//        corsConfiguration.setAllowedMethods(Arrays.asList(
+//                HttpMethod.GET.name(),
+//                HttpMethod.HEAD.name(),
+//                HttpMethod.POST.name(),
+//                HttpMethod.PUT.name(),
+//                HttpMethod.DELETE.name(),
+//                HttpMethod.OPTIONS.name()));
         corsConfiguration.setMaxAge(1800L);
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
