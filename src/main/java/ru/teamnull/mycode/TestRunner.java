@@ -10,14 +10,11 @@ import ru.teamnull.mycode.model.SubmissionStatus;
 import ru.teamnull.mycode.model.TestType;
 import ru.teamnull.mycode.repository.*;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Component
 @AllArgsConstructor
 public class TestRunner implements CommandLineRunner {
-
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
     private final SampleRepository sampleRepository;
@@ -28,7 +25,7 @@ public class TestRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Group group = new Group(null, "M3205", Collections.emptyList(), Collections.emptyList());
+        Group group = new Group(null, "M3205", Collections.emptySet(), Collections.emptySet());
         groupRepository.save(group);
         User user = new User(
                 null,
@@ -48,7 +45,7 @@ public class TestRunner implements CommandLineRunner {
                 null,
                 Collections.emptyList(),
                 "test",
-                List.of(new Sample(null, "1", "5")),
+                Set.of(new Sample(null, "1", "5")),
                 new Date(), 5.0f, 5,
                 TestType.TEST,
                 PostprocessorType.EASY,
@@ -56,6 +53,13 @@ public class TestRunner implements CommandLineRunner {
                 null
         );
         taskRepository.save(task);
+        Test test = new Test(null, task, 5, "10 0", "10", 1.0f);
+        task.setTests(List.of(test));
+        testRepository.save(test);
+        group.setTasks(Set.of(task));
+
+        taskRepository.save(task);
+        groupRepository.save(group);
         Submission submission = Submission.builder()
                 .user(user)
                 .status(SubmissionStatus.OK)
@@ -68,9 +72,9 @@ public class TestRunner implements CommandLineRunner {
                 .build();
         submissionRepository.save(submission);
         submissionRepository.save(submission1);
-        submissionRepository.deleteById(submission1.getId());
-        taskRepository.deleteById(task.getId());
+//        submissionRepository.deleteById(submission1.getId());
+//        taskRepository.deleteById(task.getId());
         userRepository.getOne(user.getId());
-        userRepository.deleteById(user.getId());
+//        userRepository.deleteById(user.getId());
     }
 }

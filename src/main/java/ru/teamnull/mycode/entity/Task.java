@@ -10,6 +10,7 @@ import ru.teamnull.mycode.model.TestType;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -22,10 +23,11 @@ public class Task {
     @GeneratedValue
     private UUID id;
     @ManyToMany
+    @JsonIgnore
     private List<Group> groups;
     private String problem;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Sample> samples;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Sample> samples;
     private Date deadline;
     private float timeLimit;
     private int memoryLimit;
@@ -34,7 +36,7 @@ public class Task {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Test> tests;
+    private List<Test> tests;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    Validation validation;
+    private Validation validation;
 }

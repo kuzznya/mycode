@@ -1,5 +1,6 @@
 package ru.teamnull.mycode.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "USER_ENTITY")
+@JsonIdentityReference(alwaysAsId = true)
 public class User {
     @Id
     @GeneratedValue
@@ -31,7 +33,7 @@ public class User {
     private Date birthDate;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
     private Group group;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
