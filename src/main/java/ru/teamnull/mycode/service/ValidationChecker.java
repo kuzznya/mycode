@@ -39,6 +39,9 @@ public class ValidationChecker extends Checker {
         return validation.getTestCount();
     }
 
+    private static native int validationCheck(float timeLimit, int memoryLimit,
+                                              String codePath, String generatorPath, String validatorPath);
+
     private SubmissionStatus validationCheck(File codeFile,
                                              File generator,
                                              File validator,
