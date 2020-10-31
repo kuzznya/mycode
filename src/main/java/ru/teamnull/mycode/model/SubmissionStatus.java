@@ -1,12 +1,13 @@
 package ru.teamnull.mycode.model;
 
 public enum SubmissionStatus {
-    IN_PROCESS,
+    OK,
     CE,
-    TL,
-    ML,
     RE,
     WA,
-    OK,
-    STYLE_ERROR
+    TL,
+    ML,
+    STYLE_ERROR,
+    UNKNOWN_ERROR,
+    IN_PROCESS
 }
