@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.teamnull.mycode.entity.User;
 import ru.teamnull.mycode.model.SignInRequest;
+import ru.teamnull.mycode.security.SecurityContextUserReceiver;
 import ru.teamnull.mycode.service.AuthService;
 
 import java.util.Base64;
@@ -14,6 +15,7 @@ import java.util.Base64;
 public class UserController {
 
     private final AuthService authService;
+    private final SecurityContextUserReceiver receiver;
 
     @CrossOrigin(methods = RequestMethod.POST)
     @PostMapping("/sign-up")
@@ -39,5 +41,10 @@ public class UserController {
         return ResponseEntity.ok()
                 .header("Authorization", "Basic " + base64Credentials)
                 .body(user);
+    }
+
+    @GetMapping("/check-token")
+    public User checkToken() {
+        return receiver.getUser().block();
     }
 }
