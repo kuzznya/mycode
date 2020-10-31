@@ -51,6 +51,7 @@ public class SecurityConfig {
                 .authorizeExchange()
                 .pathMatchers(HttpMethod.POST, "/sign-up").permitAll()
                 .pathMatchers(HttpMethod.POST, "/sign-in").permitAll()
+                .pathMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyExchange().authenticated()
                 .and()
                 .build();
