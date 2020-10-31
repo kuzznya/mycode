@@ -16,7 +16,7 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping
-    public Set<Task> getAllTasks(@PathVariable UUID groupId) {
+    public List<Task> getAllTasks(@PathVariable UUID groupId) {
         return taskService.getTasksByGroupId(groupId);
     }
 

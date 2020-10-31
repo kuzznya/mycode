@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -23,7 +24,7 @@ public class Group {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnore
-    private Set<Task> tasks;
+    private List<Task> tasks;
     @OneToMany(fetch = FetchType.EAGER)
     private Set<User> students;
 }

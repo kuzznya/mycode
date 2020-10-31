@@ -5,13 +5,11 @@ import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import ru.teamnull.mycode.entity.Group;
 import ru.teamnull.mycode.entity.Task;
 import ru.teamnull.mycode.repository.GroupRepository;
 import ru.teamnull.mycode.repository.TaskRepository;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -20,7 +18,7 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final GroupRepository groupRepository;
 
-    public Set<Task> getTasksByGroupId(UUID groupId) {
+    public List<Task> getTasksByGroupId(UUID groupId) {
         return groupRepository.findById(groupId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND))
                 .getTasks();

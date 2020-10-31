@@ -19,7 +19,8 @@ public class Test {
     @JsonIgnore
     private UUID id;
     @ManyToOne
-    @JoinColumn(name = "task_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "task_id", referencedColumnName = "id")
+    @JsonIgnore
     private Task task;
     private int number;
     private String input;
