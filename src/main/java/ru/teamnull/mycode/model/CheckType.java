@@ -1,6 +1,6 @@
 package ru.teamnull.mycode.model;
 
-public enum  TestType {
+public enum CheckType {
     TEST,
     VALIDATION
 }

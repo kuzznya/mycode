@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import ru.teamnull.mycode.model.PostprocessorType;
-import ru.teamnull.mycode.model.TestType;
+import ru.teamnull.mycode.model.CheckType;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -33,7 +33,7 @@ public class Task {
     private Date deadline;
     private float timeLimit;
     private int memoryLimit;
-    private TestType testType;
+    private CheckType checkType;
     private PostprocessorType postprocessorType;
 
     @JsonIgnore

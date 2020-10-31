@@ -7,7 +7,7 @@ import ru.teamnull.mycode.entity.*;
 import ru.teamnull.mycode.model.PostprocessorType;
 import ru.teamnull.mycode.model.Role;
 import ru.teamnull.mycode.model.SubmissionStatus;
-import ru.teamnull.mycode.model.TestType;
+import ru.teamnull.mycode.model.CheckType;
 import ru.teamnull.mycode.repository.*;
 
 import java.util.*;
@@ -47,7 +47,7 @@ public class TestRunner implements CommandLineRunner {
                 "test",
                 List.of(new Sample(null, "1", "5")),
                 new Date(), 5.0f, 5,
-                TestType.TEST,
+                CheckType.TEST,
                 PostprocessorType.EASY,
                 Collections.emptyList(),
                 null
