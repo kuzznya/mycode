@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 import ru.teamnull.mycode.dto.GroupsTask;
 import ru.teamnull.mycode.service.GroupTaskService;
 
@@ -23,8 +24,7 @@ public class GroupTaskController {
     }
 
     @GetMapping("/tasks")
-    @PreAuthorize("hasRole('STUDENT')")
-    public List<GroupsTask> getGroupTasks() {
-        return groupTaskService.getAll();
+    public Flux<GroupsTask> getGroupTasks() {
+        return Flux.fromIterable(groupTaskService.getAll());
     }
 }
