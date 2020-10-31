@@ -1,8 +1,6 @@
 package ru.teamnull.mycode.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,9 +36,11 @@ public class User implements UserDetails {
     private Role role;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id", referencedColumnName = "id")
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private Group group;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.SELECT)
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private List<Submission> submissions;
 
     public User(String username, String password, String name, String surname, String middlename, String email, Date birthDate, Role role) {
