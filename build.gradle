@@ -165,14 +165,14 @@ model {
 }
 
 compileJava {
-    finalizedBy "cnativeSharedLibrary", "cppnativeSharedLibrary"
+//    finalizedBy "cnativeSharedLibrary", "cppnativeSharedLibrary"
 }
 
 jar {
-    dependsOn("cnativeSharedLibrary", "cppnativeSharedLibrary")
-    from("${project.buildDir}/libs/bridge/shared") {
-        into "libs"
-    }
+//    dependsOn("cnativeSharedLibrary", "cppnativeSharedLibrary")
+//    from("${project.buildDir}/libs/bridge/shared") {
+//        into "libs"
+//    }
 }
 
 test {
