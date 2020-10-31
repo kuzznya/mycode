@@ -36,6 +36,6 @@ public class Submission {
     private Date timestamp;
     private SubmissionStatus status;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<TestResult> testResults;
+    private List<CheckResult> checkResults;
     private int points;
 }

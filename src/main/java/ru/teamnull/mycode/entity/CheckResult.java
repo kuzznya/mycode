@@ -18,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TestResult {
+public class CheckResult {
     @Id
     @GeneratedValue
     @JsonIgnore
