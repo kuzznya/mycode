@@ -5,7 +5,7 @@ Use `./build.sh` to build the sandbox. For cleaning build files use `./build.sh 
 # Usage
 
 ```
-usage: ./safeexec <options> --exec <command>
+usage: ./sandbox <options> --exec <command>
 Available options:
 	--cpu     <seconds>           Default: 1 second(s)
 	--mem     <kbytes>            Default: 32768 kbyte(s)
@@ -23,4 +23,4 @@ Available options:
 	--error   <path>              Print stderr to file (default: /dev/null)
 ```
 
-Example: `./safeexec --exec tests/hello.cpp` executes *hello.cpp* with default parameters.
+Example: `./sandbox --exec tests/hello.cpp` executes *hello.cpp* with default parameters.
