@@ -18,6 +18,7 @@ public class UserController {
 
     private final AuthService authService;
 
+    @CrossOrigin
     @PostMapping("/sign-up")
     public ResponseEntity<User> register(@RequestBody User user) {
         User registeredUser = authService.register(user);
@@ -30,6 +31,7 @@ public class UserController {
                 .body(registeredUser);
     }
 
+    @CrossOrigin
     @PostMapping("/sign-in")
     public ResponseEntity<User> signIn(@RequestBody SignInRequest request) {
         User user = authService.validateRequest(request);
