@@ -30,7 +30,7 @@ public class Submission {
     @ManyToOne
     private Task task;
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
     @Lob
@@ -38,6 +38,7 @@ public class Submission {
     private Language language;
     @CreationTimestamp
     private Date timestamp;
+    @Enumerated(EnumType.STRING)
     private SubmissionStatus status;
     @OneToMany(cascade = CascadeType.ALL)
     private List<CheckResult> checkResults;

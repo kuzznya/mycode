@@ -6,7 +6,7 @@ import ru.teamnull.mycode.entity.Submission;
 import ru.teamnull.mycode.entity.Test;
 import ru.teamnull.mycode.model.SubmissionStatus;
 
-import java.io.File;
+import java.io.*;
 import java.util.List;
 
 public class TestChecker extends Checker {
@@ -29,8 +29,40 @@ public class TestChecker extends Checker {
                                        File outputFile,
                                        float timeLimitSeconds,
                                        int memoryLimitKB) {
-        // TODO: 31.10.2020 CHECK results
-        return SubmissionStatus.OK;
+        try {
+            Runtime.getRuntime().exec("/Users/kuzznya/Programs/Java/mycode/cpp/sandbox/build.sh").waitFor();
+            Runtime.getRuntime().exec("cd /Users/kuzznya/Programs/Java/mycode/cpp/ && make").waitFor();
+            int result = Runtime.getRuntime().exec("/Users/kuzznya/Programs/Java/mycode/cpp/sandbox/run_solution " + codeFile.getAbsolutePath() +
+                    " " + timeLimitSeconds + " " + memoryLimitKB +
+                    " -std" + inputFile.getAbsolutePath() + " " + outputFile.getAbsolutePath()).waitFor();
+
+            //Compilation Error
+            //OK
+            //Wrong Answer
+            //Memory Limit Exceeded
+            //Time Limit Exceeded
+            //Runtime Error
+
+            System.out.println(result);
+            switch (result) {
+                case 1:
+                    return SubmissionStatus.CE;
+                case 2:
+                    return SubmissionStatus.OK;
+                case 3:
+                    return SubmissionStatus.WA;
+                case 4:
+                    return SubmissionStatus.ML;
+                case 5:
+                    return SubmissionStatus.TL;
+                default:
+                    return SubmissionStatus.RE;
+            }
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 
     @Override
