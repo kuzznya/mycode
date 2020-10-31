@@ -27,4 +27,5 @@ public class Validation {
     private int testCount;
     @OneToOne
     private Task task;
+    private int weight;
 }
