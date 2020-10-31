@@ -2,6 +2,7 @@ package ru.teamnull.mycode.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,38 +37,55 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "group_id", referencedColumnName = "id")
     private Group group;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.SELECT)
     private List<Submission> submissions;
 
+    public User(String username, String password, String name, String surname, String middlename, String email, Date birthDate, Role role) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.middlename = middlename;
+        this.email = email;
+        this.birthDate = birthDate;
+        this.role = role;
+    }
+
     @Override
+    @JsonIgnore
     public String getPassword() {
         return "{noop}" + password;
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }
