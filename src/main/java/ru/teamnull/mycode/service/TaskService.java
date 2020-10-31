@@ -28,6 +28,9 @@ public class TaskService {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        System.out.println("First");
+        System.out.println(task.getGroups());
+        System.out.println(groupId);
         if(task.getGroups()
                 .stream()
                 .anyMatch(group -> group.getId().equals(groupId))) {
