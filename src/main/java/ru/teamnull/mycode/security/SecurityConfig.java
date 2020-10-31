@@ -11,7 +11,7 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-import ru.teamnull.mycode.service.UserService;
+import ru.teamnull.mycode.service.AuthService;
 
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
@@ -58,10 +58,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public ReactiveAuthenticationManager reactiveAuthenticationManager(UserService userService,
+    public ReactiveAuthenticationManager reactiveAuthenticationManager(AuthService authService,
                                                                        PasswordEncoder passwordEncoder) {
         UserDetailsRepositoryReactiveAuthenticationManager authenticationManager =
-                new UserDetailsRepositoryReactiveAuthenticationManager(userService);
+                new UserDetailsRepositoryReactiveAuthenticationManager(authService);
         authenticationManager.setPasswordEncoder(passwordEncoder);
         return authenticationManager;
     }
