@@ -1,8 +1,13 @@
 package ru.teamnull.mycode.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import ru.teamnull.mycode.entity.Task;
+import ru.teamnull.mycode.entity.User;
+import ru.teamnull.mycode.model.Role;
+import ru.teamnull.mycode.security.SecurityContextUserReceiver;
 import ru.teamnull.mycode.service.TaskService;
 
 import java.util.List;
@@ -14,10 +19,18 @@ import java.util.UUID;
 @AllArgsConstructor
 public class TaskController {
     private final TaskService taskService;
+    private final SecurityContextUserReceiver receiver;
 
     @GetMapping
     public List<Task> getAllTasks(@PathVariable UUID groupId) {
-        return taskService.getTasksByGroupId(groupId);
+        List<Task> tasks = taskService.getTasksByGroupId(groupId);
+        User currentUser = receiver.getUser().block();
+        if(currentUser == null)
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        for (Task task : tasks)
+            if (currentUser.getRole().equals(Role.STUDENT))
+                task.setTests(null);
+        return tasks;
     }
 
     @PostMapping
