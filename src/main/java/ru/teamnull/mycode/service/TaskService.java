@@ -34,9 +34,8 @@ public class TaskService {
     public Task addTask(UUID groupId, Task task) {
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        List<Task> tasks = group.getTasks();
-        tasks.add(task);
-        group.setTasks(tasks);
+        group.getTasks().add(task);
+        task.getGroups().add(group);
         Task toReturn = taskRepository.save(task);
         groupRepository.save(group);
         return toReturn;

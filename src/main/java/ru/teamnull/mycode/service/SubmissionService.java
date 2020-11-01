@@ -40,16 +40,17 @@ public class SubmissionService {
     }
 
     private void updateSubmissionStatus(UUID submissionId) {
-        Submission submission = submissionRepository.getOne(submissionId);
-        SubmissionStatus status = SubmissionStatus.IN_PROCESS;
+        submissionRepository.findById(submissionId).ifPresent(submission -> {
+            SubmissionStatus status = SubmissionStatus.IN_PROCESS;
 
-        for (CheckResult result : submission.getCheckResults()) {
-            if (result.getStatus().ordinal() < status.ordinal())
-                status = result.getStatus();
-        }
+            for (CheckResult result : submission.getCheckResults()) {
+                if (result.getStatus().ordinal() < status.ordinal())
+                    status = result.getStatus();
+            }
 
-        submission.setStatus(status);
-        submissionRepository.save(submission);
+            submission.setStatus(status);
+            submissionRepository.save(submission);
+        });
     }
 
     public Flux<CheckResult> submit(UUID taskId, Language language, String code) {
@@ -70,6 +71,6 @@ public class SubmissionService {
                 .map(Checker::check)
                 .flatMapMany(resultFlux -> resultFlux)
                 .doOnNext(checkResultRepository::save)
-                .doFinally(signalType -> updateSubmissionStatus(processedSubmission.get().getId()));
+                .doOnNext(result -> updateSubmissionStatus(processedSubmission.get().getId()));
     }
 }
