@@ -20,6 +20,7 @@ import java.util.UUID;
 public class StudentService {
     private final GroupRepository groupRepository;
     private final GroupService groupService;
+    private final UserRepository userRepository;
 
     public Set<User> getAllByGroupId(UUID groupId) {
         return groupRepository.findById(groupId)
@@ -41,7 +42,8 @@ public class StudentService {
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         Set<User> students = group.getStudents();
-        User student = getStudentById(groupId, studentId);
+        User student = userRepository.findById(studentId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND));
         students.add(student);
         group.setStudents(students);
         groupService.add(group);
