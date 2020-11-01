@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,6 +17,7 @@ import ru.teamnull.mycode.entity.User;
 import ru.teamnull.mycode.model.Language;
 import ru.teamnull.mycode.model.Role;
 import ru.teamnull.mycode.model.SubmissionRequest;
+import ru.teamnull.mycode.repository.UserRepository;
 import ru.teamnull.mycode.security.SecurityContextUserReceiver;
 import ru.teamnull.mycode.service.SubmissionService;
 
@@ -27,9 +30,9 @@ import java.util.UUID;
 @AllArgsConstructor
 public class SubmissionController {
 
-    private final SecurityContextUserReceiver userReceiver;
-
     private final SubmissionService submissionService;
+
+    private final UserRepository userRepository;
 
     private String resultToJson(CheckResult result) {
         int testNumber;
@@ -42,14 +45,15 @@ public class SubmissionController {
     }
 
     @GetMapping
-    public List<Submission> getSubmissions() {
-        User user = userReceiver
-                .getUser()
-                .blockOptional()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
-        if (user.getRole() == Role.TEACHER)
-            return submissionService.getSubmissions();
-        return submissionService.getSubmissions(user);
+    public List<Submission> getSubmissions(UserDetails userDetails) {
+        if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("STUDENT"))) {
+            userRepository
+                    .findByUsername(userDetails.getUsername())
+                    .ifPresentOrElse(
+                    user -> submissionService.getSubmissions(),
+                    submissionService::getSubmissions);
+        }
+        return submissionService.getSubmissions();
     }
 
 //    @PostMapping
