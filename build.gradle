@@ -101,10 +101,6 @@ model {
                 }
             }
 
-            toolChains {
-                withType(Gcc)
-            }
-
             binaries.all {
                 if (targetPlatform.operatingSystem.macOsX) {
                     cppCompiler.args '-I', "${Jvm.current().javaHome}/include"
@@ -112,7 +108,8 @@ model {
 
 
                     cppCompiler.args '-mmacosx-version-min=10.9'
-                    cppCompiler.args '-stdlib=libc++'
+                    if (toolChain in Clang)
+                        cppCompiler.args '-stdlib=libc++'
                     cppCompiler.args '-std=c++14'
 
                     linker.args '-mmacosx-version-min=10.9'
@@ -125,7 +122,8 @@ model {
                     cppCompiler.args '-I', "${Jvm.current().javaHome}/include/linux"
                     cppCompiler.args '-D_FILE_OFFSET_BITS=64'
                     cppCompiler.args '-std=c++14'
-                    cppCompiler.args '-stdlib=libc++'
+                    if (toolChain in Clang)
+                        cppCompiler.args '-stdlib=libc++'
 
                     if (toolChain in Clang)
                         linker.args '-lstdc++'
@@ -134,7 +132,8 @@ model {
                     cppCompiler.args "-I${Jvm.current().javaHome}/include"
                     cppCompiler.args "-I${Jvm.current().javaHome}/include/win32"
                     cppCompiler.args '-std=c++14'
-                    cppCompiler.args '-stdlib=libc++'
+                    if (toolChain in Clang)
+                        cppCompiler.args '-stdlib=libc++'
 
                     linker.args "Shlwapi.lib", "Advapi32.lib"
                     if (toolChain in Clang)
@@ -143,7 +142,8 @@ model {
                     cppCompiler.args '-I', "${Jvm.current().javaHome}/include"
                     cppCompiler.args '-I', "${Jvm.current().javaHome}/include/freebsd"
                     cppCompiler.args '-std=c++14'
-                    cppCompiler.args '-stdlib=libc++'
+                    if (toolChain in Clang)
+                        cppCompiler.args '-stdlib=libc++'
 
                     if (toolChain in Clang)
                         linker.args '-lstdc++'
