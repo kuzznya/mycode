@@ -41,7 +41,7 @@ public class SubmissionService {
 
     private void updateSubmissionStatus(UUID submissionId) {
         Submission submission = submissionRepository.getOne(submissionId);
-        SubmissionStatus status = submission.getStatus();
+        SubmissionStatus status = SubmissionStatus.IN_PROCESS;
 
         for (CheckResult result : submission.getCheckResults()) {
             if (result.getStatus().ordinal() < status.ordinal())
