@@ -1,1 +1,1 @@
-java -Dserver.port=$PORT -Djava.library.path=/build/libs $JAVA_OPTS -jar build/libs/*.jar
+java -Dserver.port=$PORT -Djava.library.path=build/libs $JAVA_OPTS -jar build/libs/*.jar
