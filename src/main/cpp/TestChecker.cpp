@@ -17,7 +17,7 @@ struct Student  // Cache solution od a student
 };
 */
 
-std::string random_filename()
+std::string random_filename(std::string extension)
 {
     std::string str("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
 
@@ -26,7 +26,7 @@ std::string random_filename()
 
     std::shuffle(str.begin(), str.end(), generator);
 
-    return str.substr(0, 32);
+    return str.substr(0, 32) + extension;
 }
 
 std::string parse_verdict(std::string& verdict)
@@ -37,9 +37,9 @@ std::string parse_verdict(std::string& verdict)
     return value;
 }
 
-void remove_dump(std::string& filename)
+void remove_dump(std::string& context_path, std::string& filename)
 {
-    std::string tmp = "rm -rf " + filename;
+    std::string tmp = "rm -rf " + context_path + "/tmp/" + filename;
     system( tmp.c_str() );
 }
 
@@ -47,8 +47,6 @@ void remove_dump(std::string& filename)
 JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
         (JNIEnv* env, jclass, jstring path, jfloat tl, jint ml, jstring code_file, jstring input_file, jstring output_file)
 {
-    std::ofstream out("/Users/kuzznya/jni_log.txt");
-    
     const char* sandbox_arg     = env->GetStringUTFChars(path,        JNI_FALSE);
     const char* code_file_arg   = env->GetStringUTFChars(code_file,   JNI_FALSE);
     const char* input_file_arg  = env->GetStringUTFChars(input_file,  JNI_FALSE);
@@ -67,12 +65,16 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
 //    env->ReleaseStringUTFChars(output_file, output_file_arg);
 
     std::string sandbox = sandbox_arg;
-    std::string program = sandbox + "/" + code_file_arg;
+    std::string program = code_file_arg;
     float time_limit    = tl;
     int mem_limit       = ml;
     std::string flag    = "-std";
     std::string input   = input_file_arg;
     std::string output  = output_file_arg;
+
+    system(("mkdir " + sandbox + "/tmp").c_str());
+
+    std::ofstream out(sandbox + "/tmp/" + "jni_log.txt");
     
     out << "\n[DEBUG] sandbox: " << sandbox << std::endl;
     out << "\n[DEBUG] program: " << program << std::endl;
@@ -85,9 +87,9 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
 
     // Compilation
     std::string command;
-    std::string solution = random_filename();
+    std::string solution = sandbox + "/tmp/" + random_filename(".out");
     out << "\n[DEBUG] solution: " << solution << std::endl;
-    std::string err_log  = random_filename();
+    std::string err_log  = sandbox + "/tmp/" + random_filename(".txt");
     out << "\n[DEBUG] err_log: " << err_log << std::endl;
     if (extension == "c" || extension == "cpp")
     {
@@ -97,6 +99,7 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
     else if (extension == "java")
     {
         command = "java " + program + " > " + solution;
+        out << "COMMAND: " << command << std::endl;
     }
     else
     {
@@ -111,14 +114,14 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
     {
         command = "cat " + err_log;
         system( command.c_str() );
-        remove_dump(solution);
-        remove_dump(err_log);
+        remove_dump(sandbox, solution);
+        remove_dump(sandbox, err_log);
         return 1;
     }
 
     // Execution
-    std::string verdict = random_filename();
-    std::string result  = random_filename();
+    std::string verdict = sandbox + "/tmp/" + random_filename(".txt");
+    std::string result  = sandbox + "/tmp/" + random_filename(".txt");
     out << "\n[DEBUG] verdict: " << verdict << std::endl;
     out << "\n[DEBUG] result: " << result << std::endl;
     
@@ -134,9 +137,9 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
     */
 
     //if (true) { // check if it is file input or stdin
-    command = "cat " + input + " | ./" + sandbox + "/cnative --cpu " +
+    command = "cat " + input + " | " + sandbox + "/cnative --cpu " +
             std::to_string(time_limit) + " --mem " + std::to_string(mem_limit) +
-            " --usage " + verdict + " --exec ./" + solution + " > " + result;
+            " --usage " + verdict + " --exec " + solution + " > " + result;
     //} else {
     //    command = "./sandbox --cpu " + std::to_string(time_limit) + " --mem " + std::to_string(mem_limit) + " --usage " + verdict + " --exec ./" + solution + " < " + input;
     //}
@@ -145,14 +148,14 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
 
     //debug
     out << "\n[DEBUG] Input:\n";
-    command = "cat " + input;
+    command = "cat " + input + " > " + sandbox + "/INPUT.txt";
     
     system( command.c_str() );
     out << "\n[DEBUG] Result:\n";
-    command = "cat " + result;
+    command = "cat " + result + " > " + sandbox + "/RESULT.txt";
     system( command.c_str() );
     out << "\n[DEBUG] Output:\n";
-    command = "cat " + output;
+    command = "cat " + output + " > " + sandbox + "/OUTPUT.txt";
     system( command.c_str() );
     //debug
 
@@ -174,9 +177,9 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
     else
     {
         // Remove dump files
-        remove_dump(solution);
-        remove_dump(verdict);
-        remove_dump(result);
+        remove_dump(sandbox, solution);
+        remove_dump(sandbox, verdict);
+        remove_dump(sandbox, result);
 
         if (verdict_out == "Memory Limit Exceeded") //|| verdict_out == "Time Limit Exceeded")
         {
