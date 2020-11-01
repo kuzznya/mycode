@@ -12,6 +12,8 @@ import java.util.List;
 
 public class TestChecker extends Checker {
 
+    private static final String tempPath = "/Users/kuzznya";
+
     private final List<Test> tests;
 
     public TestChecker(Submission submission) {
@@ -25,7 +27,7 @@ public class TestChecker extends Checker {
         return tests.size();
     }
 
-    private static native int testCheck(float timeLimit, int memoryLimit,
+    private static native int testCheck(String cnativePath, float timeLimit, int memoryLimit,
                                         String codePath, String inputPath, String outputPath);
 
     private SubmissionStatus testCheck(File codeFile,
@@ -33,41 +35,34 @@ public class TestChecker extends Checker {
                                        File outputFile,
                                        float timeLimitSeconds,
                                        int memoryLimitKB) {
-        try {
-            Runtime.getRuntime().exec("/Users/kuzznya/Programs/Java/mycode/cpp/sandbox/build.sh").waitFor();
-            Runtime.getRuntime().exec("cd /Users/kuzznya/Programs/Java/mycode/cpp/ && make").waitFor();
-            int result = Runtime.getRuntime().exec("/Users/kuzznya/Programs/Java/mycode/cpp/sandbox/run_solution " + codeFile.getAbsolutePath() +
-                    " " + timeLimitSeconds + " " + memoryLimitKB +
-                    " -std" + inputFile.getAbsolutePath() + " " + outputFile.getAbsolutePath()).waitFor();
+        int result = testCheck(
+                System.getProperty("java.library.path"),
+                timeLimitSeconds, memoryLimitKB,
+                codeFile.getAbsolutePath(), inputFile.getAbsolutePath(), outputFile.getAbsolutePath());
 
-            //Compilation Error
-            //OK
-            //Wrong Answer
-            //Memory Limit Exceeded
-            //Time Limit Exceeded
-            //Runtime Error
+        //Compilation Error
+        //OK
+        //Wrong Answer
+        //Memory Limit Exceeded
+        //Time Limit Exceeded
+        //Runtime Error
 
-            System.out.println(result);
-            switch (result) {
-                case 1:
-                    return SubmissionStatus.CE;
-                case 2:
-                    return SubmissionStatus.OK;
-                case 3:
-                    return SubmissionStatus.WA;
-                case 4:
-                    return SubmissionStatus.ML;
-                case 5:
-                    return SubmissionStatus.TL;
-                case 6:
-                    return SubmissionStatus.RE;
-                default:
-                    return SubmissionStatus.UNKNOWN_ERROR;
-            }
-
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
+        System.out.println(result);
+        switch (result) {
+            case 1:
+                return SubmissionStatus.CE;
+            case 2:
+                return SubmissionStatus.OK;
+            case 3:
+                return SubmissionStatus.WA;
+            case 4:
+                return SubmissionStatus.ML;
+            case 5:
+                return SubmissionStatus.TL;
+            case 6:
+                return SubmissionStatus.RE;
+            default:
+                return SubmissionStatus.UNKNOWN_ERROR;
         }
     }
 

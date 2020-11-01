@@ -47,31 +47,31 @@ void remove_dump(std::string& filename)
 JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
         (JNIEnv* env, jclass, jfloat tl, jint ml, jstring code_file, jstring input_file, jstring output_file)
 {
-    std::ofstream out("jni_log.txt");
+    std::ofstream out("/Users/kuzznya/jni_log.txt");
     
     const char* code_file_arg   = env->GetStringUTFChars(code_file, JNI_FALSE);
     const char* input_file_arg  = env->GetStringUTFChars(input_file, JNI_FALSE);
     const char* output_file_arg = env->GetStringUTFChars(output_file, JNI_FALSE);
 
-    char code_file_arg_new[256];
-    char input_file_arg_new[256];
-    char output_file_arg_new[256];
+//    char code_file_arg_new[256];
+//    char input_file_arg_new[256];
+//    char output_file_arg_new[256];
 
-    strcpy(const_cast<char*>(code_file_arg), code_file_arg_new);
-    strcpy(const_cast<char*>(input_file_arg), input_file_arg_new);
-    strcpy(const_cast<char*>(output_file_arg), output_file_arg_new);
+//    strcpy(const_cast<char*>(code_file_arg), code_file_arg_new);
+//    strcpy(const_cast<char*>(input_file_arg), input_file_arg_new);
+//    strcpy(const_cast<char*>(output_file_arg), output_file_arg_new);
 
-    env->ReleaseStringUTFChars(code_file,   code_file_arg);
-    env->ReleaseStringUTFChars(input_file,  input_file_arg);
-    env->ReleaseStringUTFChars(output_file, output_file_arg);
+//    env->ReleaseStringUTFChars(code_file,   code_file_arg);
+//    env->ReleaseStringUTFChars(input_file,  input_file_arg);
+//    env->ReleaseStringUTFChars(output_file, output_file_arg);
 
     std::string sandbox = "cnative";
-    std::string program = code_file_arg_new;
+    std::string program = code_file_arg;
     float time_limit    = tl;
     int mem_limit       = ml;
     std::string flag    = "-std";
-    std::string input   = input_file_arg_new;
-    std::string output  = output_file_arg_new;
+    std::string input   = input_file_arg;
+    std::string output  = output_file_arg;
     
     out << "\n[DEBUG] program: " << program << std::endl;
     out << "\n[DEBUG] time_limit: " << time_limit << std::endl;
