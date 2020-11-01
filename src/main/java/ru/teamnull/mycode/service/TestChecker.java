@@ -111,6 +111,8 @@ public class TestChecker extends Checker {
     }
 
     static {
-        Loader.loadNativeLibrary();
+        try {
+            Loader.loadNativeLibrary();
+        } catch (Exception ignored) { }
     }
 }
