@@ -8,7 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 public enum Language {
     C(".c"),
     CPP(".cpp"),
-    JAVA(".java");
+    PASCAL(".pas");
 
     private final String extension;
 
@@ -22,8 +22,8 @@ public enum Language {
                 return C;
             case ".cpp":
                 return CPP;
-            case ".java":
-                return JAVA;
+            case ".pas":
+                return PASCAL;
             default:
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unknown file extension");
         }
