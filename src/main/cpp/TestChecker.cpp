@@ -100,6 +100,10 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
     {
         command = "fpc " + program + " -o" + solution + " > " + err_log;
     }
+    else if (extension == "hs")
+    {
+        command = "ghc -o " + solution + " " + program + " > " + err_log;
+    }
     else
     {
         out << "[ERROR] Wrong file extension. Aborting...\n";
