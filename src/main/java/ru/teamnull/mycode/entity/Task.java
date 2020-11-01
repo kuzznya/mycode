@@ -29,6 +29,7 @@ public class Task {
     @Fetch(FetchMode.SELECT)
     @JsonIgnore
     private List<Group> groups;
+    @Lob
     private String problem;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(FetchMode.SELECT)
