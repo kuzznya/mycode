@@ -30,7 +30,7 @@ public class TestController {
                         @RequestBody Test newTest) {
         Task task = taskService.getById(groupId, taskId);
         task.getTests().add(newTest);
-        taskService.addTask(task);
+        taskService.addTask(groupId, task);
         return newTest;
     }
 }

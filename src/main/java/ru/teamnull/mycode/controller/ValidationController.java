@@ -31,7 +31,7 @@ public class ValidationController {
                         @RequestBody Validation newValidation) {
         Task task = taskService.getById(groupId, taskId);
         task.setValidation(newValidation);
-        taskService.addTask(task);
+        taskService.addTask(groupId, task);
         return newValidation;
     }
 }

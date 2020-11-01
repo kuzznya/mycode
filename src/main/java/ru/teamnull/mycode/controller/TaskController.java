@@ -28,8 +28,9 @@ public class TaskController {
     }
 
     @PostMapping
-    public Task addTask(@RequestBody Task newTask) {
-        return taskService.addTask(newTask);
+    public Task addTask(@PathVariable UUID groupId,
+                        @RequestBody Task newTask) {
+        return taskService.addTask(groupId, newTask);
     }
 
     @GetMapping("/{taskId}")
