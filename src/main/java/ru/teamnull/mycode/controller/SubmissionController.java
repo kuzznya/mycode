@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import ru.teamnull.mycode.entity.CheckResult;
 import ru.teamnull.mycode.model.Language;
+import ru.teamnull.mycode.model.SubmissionRequest;
 import ru.teamnull.mycode.service.SubmissionService;
 
 import java.util.UUID;
@@ -28,15 +30,11 @@ public class SubmissionController {
         return "{\"test\": " + testNumber + "\", \"result\": \"" + result.getStatus().name() + "\"}";
     }
 
-//    @PostMapping
-//    public Flux<String> submit(@PathVariable UUID taskId,
-//                               @RequestParam Language language,
-//                               @RequestParam MultipartFile file) {
-//        return submissionService.submit(taskId, language, file).map(this::resultToJson);
-//    }
-
     @PostMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<String> submit(@PathVariable UUID taskId, @RequestParam Language language, @RequestBody String code) {
-        return submissionService.submit(taskId, language, code).map(this::resultToJson);
+    public Flux<String> submit(@PathVariable UUID taskId,
+                               @RequestBody SubmissionRequest request) {
+        return submissionService
+                .submit(taskId, request.getLanguage(), request.getCode())
+                .map(this::resultToJson);
     }
 }
