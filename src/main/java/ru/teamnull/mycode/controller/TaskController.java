@@ -24,12 +24,6 @@ public class TaskController {
     @GetMapping
     public List<Task> getAllTasks(@PathVariable UUID groupId) {
         List<Task> tasks = taskService.getTasksByGroupId(groupId);
-        User currentUser = receiver.getUser().block();
-        if(currentUser == null)
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-        for (Task task : tasks)
-            if (currentUser.getRole().equals(Role.STUDENT))
-                task.setTests(null);
         return tasks;
     }
 
