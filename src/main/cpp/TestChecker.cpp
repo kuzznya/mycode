@@ -3,6 +3,7 @@
 #include <fstream>
 #include <random>
 #include <cstring>
+#include <algorithm>
 
 #include "ru_teamnull_mycode_service_TestChecker.h"
 #include "ru_teamnull_mycode_service_ValidationChecker.h"
