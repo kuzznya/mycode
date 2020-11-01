@@ -96,10 +96,9 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
         command = (extension == "c" ? "gcc " : "g++ ") +
                   program + " -o " + solution + " > " + err_log;
     }
-    else if (extension == "java")
+    else if (extension == "pas")
     {
-        command = "java " + program + " > " + solution;
-        out << "COMMAND: " << command << std::endl;
+        command = "fpc " + program + " -o" + solution + " > " + err_log;
     }
     else
     {
