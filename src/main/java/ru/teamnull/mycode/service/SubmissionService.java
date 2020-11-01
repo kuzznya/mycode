@@ -63,7 +63,7 @@ public class SubmissionService {
         SubmissionStatus status = SubmissionStatus.OK;
 
         for (CheckResult result : submission.getCheckResults()) {
-            if (result.getStatus().ordinal() > status.ordinal())
+            if (result.getStatus().ordinal() > status.ordinal() || result.getStatus() == SubmissionStatus.IN_PROCESS)
                 status = result.getStatus();
         }
 
