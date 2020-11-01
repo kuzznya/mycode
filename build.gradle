@@ -4,8 +4,8 @@ plugins {
     id 'org.springframework.boot' version '2.3.5.RELEASE'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'java'
-//    id 'cpp'
-//    id 'c'
+    id 'cpp'
+    id 'c'
 }
 
 group = 'ru.teamnull'
@@ -41,142 +41,155 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
 }
 
-//model {
-//    platforms {
-//        x86 {
-//            if (operatingSystem.macOsX) {
-//                architecture "x64"
-//            } else {
-//                architecture "x86"
-//            }
-//        }
-//        x64 {
-//            architecture "x64"
-//        }
-//    }
-//
-//    components {
-//        cnative(NativeLibrarySpec) {
-//            targetPlatform "x64"
-//
-//            sources {
-//                c {
-//                    source {
-//                        srcDirs 'src/main/c'
-//                        include "**/*.c"
-//                        include "**/*.h"
-//                    }
-//                    exportedHeaders {
-//                        srcDir 'src/main/c'
-//                        include "**/*.h"
-//                        srcDirs "${project.buildDir}/generated/sources/headers/java/main"
-//                    }
-//                }
-//            }
-//
-//            binaries.all {
-//                if (targetPlatform.operatingSystem.macOsX) {
-//                    cCompiler.args '-I', "${Jvm.current().javaHome}/include"
-//                    cCompiler.args '-I', "${Jvm.current().javaHome}/include/darwin"
-//                    cCompiler.args '-mmacosx-version-min=10.9'
-//
-//                    linker.args '-mmacosx-version-min=10.9'
-//
-//                } else if (targetPlatform.operatingSystem.linux) {
-//                    cCompiler.args '-I', "${Jvm.current().javaHome}/include"
-//                    cCompiler.args '-I', "${Jvm.current().javaHome}/include/linux"
-//                    cCompiler.args '-D_FILE_OFFSET_BITS=64'
-//
-//                } else if (targetPlatform.operatingSystem.windows) {
-//                    cCompiler.args "-I${Jvm.current().javaHome}/include"
-//                    cppCompiler.args "-I${Jvm.current().javaHome}/include/win32"
-//
-//                    linker.args "Shlwapi.lib", "Advapi32.lib"
-//                } else if (targetPlatform.operatingSystem.freeBSD) {
-//                    cCompiler.args '-I', "${Jvm.current().javaHome}/include"
-//                    cCompiler.args '-I', "${Jvm.current().javaHome}/include/freebsd"
-//                }
-//            }
-//        }
-//
-//
-//        cppnative(NativeLibrarySpec) {
-//            targetPlatform "x64"
-//
-//            sources {
-//                cpp {
-//                    source {
-//                        srcDirs 'src/main/cpp'
-//                        include "**/*.cpp"
-//                    }
-//                    exportedHeaders {
-//                        srcDirs "${project.buildDir}/generated/sources/headers/java/main"
-//                    }
-//                }
-//            }
-//
-//            binaries.all {
-//                if (targetPlatform.operatingSystem.macOsX) {
-//                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include"
-//                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include/darwin"
-//                    cppCompiler.args '-mmacosx-version-min=10.9'
-//                    cppCompiler.args '-stdlib=libc++'
-//                    cppCompiler.args '-std=c++14'
-//                    cppCompiler.args '-O2'
-//
-//                    linker.args '-mmacosx-version-min=10.9'
-//                    linker.args '-lc++'
-//                    linker.args '-O2'
-//
-//                } else if (targetPlatform.operatingSystem.linux) {
-//                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include"
-//                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include/linux"
-//                    cppCompiler.args '-D_FILE_OFFSET_BITS=64'
-//                    cppCompiler.args '-std=c++14'
-//                    cppCompiler.args '-stdlib=libc++'
-//                    cppCompiler.args '-O2'
-//
-//                    linker.args '-lstdc++'
-//                    linker.args '-O2'
-//
-//                } else if (targetPlatform.operatingSystem.windows) {
-//                    cppCompiler.args "-I${Jvm.current().javaHome}/include"
-//                    cppCompiler.args "-I${Jvm.current().javaHome}/include/win32"
-//                    cppCompiler.args '-std=c++14'
-//                    cppCompiler.args '-stdlib=libc++'
-//                    cppCompiler.args '-O2'
-//
-//                    linker.args "Shlwapi.lib", "Advapi32.lib"
-//                    linker.args '-lstdc++'
-//                    linker.args '-O2'
-//                } else if (targetPlatform.operatingSystem.freeBSD) {
-//                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include"
-//                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include/freebsd"
-//                    cppCompiler.args '-std=c++14'
-//                    cppCompiler.args '-stdlib=libc++'
-//                    cppCompiler.args '-O2'
-//
-//                    linker.args '-lstdc++'
-//                    linker.args '-O2'
-//                }
-//            }
-//        }
-//    }
-//}
+model {
+    platforms {
+        x86 {
+            if (operatingSystem.macOsX) {
+                architecture "x64"
+            } else {
+                architecture "x86"
+            }
+        }
+        x64 {
+            architecture "x64"
+        }
+    }
+
+    components {
+        cnative(NativeExecutableSpec) {
+            targetPlatform "x64"
+
+            sources {
+                c {
+                    source {
+                        srcDirs 'src/main/c'
+                        include "**/*.c"
+                        include "**/*.h"
+                    }
+                    exportedHeaders {
+                        srcDir 'src/main/c'
+                        include "**/*.h"
+                        srcDirs "${project.buildDir}/generated/sources/headers/java/main"
+                    }
+                }
+            }
+
+            binaries.all {
+                if (targetPlatform.operatingSystem.macOsX) {
+                    cCompiler.args '-mmacosx-version-min=10.9'
+                    linker.args '-mmacosx-version-min=10.9'
+                } else if (targetPlatform.operatingSystem.linux) {
+                    cCompiler.args '-D_FILE_OFFSET_BITS=64'
+                }
+
+            }
+        }
+
+
+        cppnative(NativeLibrarySpec) {
+            targetPlatform "x64"
+
+            sources {
+                cpp {
+                    source {
+                        srcDirs 'src/main/cpp'
+                        include "**/*.cpp"
+                    }
+                    exportedHeaders {
+                        srcDirs "${project.buildDir}/generated/sources/headers/java/main"
+                    }
+                }
+            }
+
+            toolChains {
+                withType(Gcc)
+            }
+
+            binaries.all {
+                if (targetPlatform.operatingSystem.macOsX) {
+                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include"
+                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include/darwin"
+
+
+                    cppCompiler.args '-mmacosx-version-min=10.9'
+                    cppCompiler.args '-stdlib=libc++'
+                    cppCompiler.args '-std=c++14'
+
+                    linker.args '-mmacosx-version-min=10.9'
+
+                    if (toolChain in Clang)
+                        linker.args '-lc++'
+
+                } else if (targetPlatform.operatingSystem.linux) {
+                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include"
+                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include/linux"
+                    cppCompiler.args '-D_FILE_OFFSET_BITS=64'
+                    cppCompiler.args '-std=c++14'
+                    cppCompiler.args '-stdlib=libc++'
+
+                    if (toolChain in Clang)
+                        linker.args '-lstdc++'
+
+                } else if (targetPlatform.operatingSystem.windows) {
+                    cppCompiler.args "-I${Jvm.current().javaHome}/include"
+                    cppCompiler.args "-I${Jvm.current().javaHome}/include/win32"
+                    cppCompiler.args '-std=c++14'
+                    cppCompiler.args '-stdlib=libc++'
+
+                    linker.args "Shlwapi.lib", "Advapi32.lib"
+                    if (toolChain in Clang)
+                        linker.args '-lstdc++'
+                } else if (targetPlatform.operatingSystem.freeBSD) {
+                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include"
+                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include/freebsd"
+                    cppCompiler.args '-std=c++14'
+                    cppCompiler.args '-stdlib=libc++'
+
+                    if (toolChain in Clang)
+                        linker.args '-lstdc++'
+                }
+            }
+        }
+    }
+}
+
+task getCnativeExecutable(type: Copy) {
+    dependsOn "cnativeExecutable"
+
+    from ("${project.buildDir}/exe/cnative") {
+        include "**"
+    }
+    delete "${project.buildDir}/libs/cnative"
+    into "${project.buildDir}/libs"
+}
+
+task getCppnativeSharedLibrary(type: Copy) {
+    dependsOn "cppnativeSharedLibrary"
+
+    from ("${project.buildDir}/libs/cppnative/shared") {
+        include "**"
+    }
+    into "${project.buildDir}/libs"
+}
 
 compileJava {
-//    finalizedBy "cnativeSharedLibrary", "cppnativeSharedLibrary"
+    finalizedBy "getCnativeExecutable", "getCppnativeSharedLibrary"
 }
 
 jar {
-//    dependsOn("cnativeSharedLibrary", "cppnativeSharedLibrary")
-//    from("${project.buildDir}/libs/bridge/shared") {
-//        into "libs"
-//    }
+    dependsOn("getCnativeExecutable", "getCppnativeSharedLibrary")
+    from("${project.buildDir}/libs") {
+        into "libs"
+    }
 }
 
 test {
-    systemProperty 'java.library.path', "${project.buildDir}/libs/bridge/shared"
+    systemProperty 'java.library.path', "${project.buildDir}/libs"
     useJUnitPlatform()
+}
+
+bootRun {
+    jvmArgs += "-Djava.library.path=${project.buildDir}/libs"
+    jvmArgs += '-Dspring.profiles.active=dev'
 }
 

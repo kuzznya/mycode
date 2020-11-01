@@ -28,6 +28,7 @@ public class TestRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        ru.teamnull.mycode.util.Loader.loadNativeLibrary();
         Group group = new Group(null, "M3205", Collections.emptyList(), Collections.emptySet());
         groupRepository.save(group);
         User user = new User(
