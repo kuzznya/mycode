@@ -28,7 +28,6 @@ public class Task {
     private String name;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(FetchMode.SELECT)
-    @JsonIgnore
     private List<Group> groups;
     @Lob
     @Type(type = "org.hibernate.type.TextType")
@@ -54,9 +53,4 @@ public class Task {
     private List<Test> tests;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Validation validation;
-
-    @JsonIgnore
-    public List<Group> getGroups() {
-        return groups;
-    }
 }
