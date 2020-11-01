@@ -8,8 +8,6 @@
 #include "ru_teamnull_mycode_service_ValidationChecker.h"
 
 
-//#include "TestChecker.h"
-
 /*
 struct Student  // Cache solution od a student
 {
@@ -71,13 +69,21 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
     std::string flag    = "-std";
     std::string input   = input_file_arg_new;
     std::string output  = output_file_arg_new;
-
+    
+    printf( "\n[DEBUG] program: %s\n", program.c_str() );
+    printf( "\n[DEBUG] time_limit: %f\n", time_limit );
+    printf( "\n[DEBUG] mem_limit: %d\n", mem_limit );
+    printf( "\n[DEBUG] input: %s\n", input.c_str() );
+    printf( "\n[DEBUG] output: %s\n", output.c_str() );
+    
     std::string extension = program.substr(program.find_last_of('.') + 1);
 
     // Compilation
     std::string command;
     std::string solution = random_filename();
+    printf( "\n[DEBUG] solution: %s\n", solution.c_str() );
     std::string err_log  = random_filename();
+    printf( "\n[DEBUG] err_log: %s\n", err_log.c_str() );
     if (extension == "c" || extension == "cpp")
     {
         command = (extension == "c" ? "gcc " : "g++ ") +
@@ -108,7 +114,8 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
     // Execution
     std::string verdict = random_filename();
     std::string result  = random_filename();
-
+    printf( "\n[DEBUG] verdict: %s\n", verdict.c_str() );
+    printf( "\n[DEBUG] result: %s\n", result.c_str() );
     /*
     if (flag == "-std")
     {
@@ -128,19 +135,19 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
     //    command = "./sandbox --cpu " + std::to_string(time_limit) + " --mem " + std::to_string(mem_limit) + " --usage " + verdict + " --exec ./" + solution + " < " + input;
     //}
     system( command.c_str() );
+    printf( "\n[DEBUG] command: %s\n", command.c_str() );
 
-    /*//debug
-    printf("[DEBUG] Input:\n");
+    //debug
+    printf("\n[DEBUG] Input:\n");
     command = "cat " + input;
     system( command.c_str() );
-    printf("[DEBUG] Result:\n");
+    printf("\n[DEBUG] Result:\n");
     command = "cat " + result;
     system( command.c_str() );
-    printf("[DEBUG] Output:\n");
+    printf("\n[DEBUG] Output:\n");
     command = "cat " + output;
     system( command.c_str() );
-    printf("[DEBUG]\n");
-    //debug*/
+    //debug
 
     // RE, TL, ML, WA, OK
     std::string verdict_out = parse_verdict(verdict);
