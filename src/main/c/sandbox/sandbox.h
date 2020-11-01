@@ -1,6 +1,9 @@
 #ifndef SAFEEXEC_H
 #define SAFEEXEC_H
 
+#include <sys/time.h>
+#include <sys/resource.h>
+#include <sys/types.h>
 #include <sys/user.h>
 
 #define INFINITY 0xFFFFFFFF

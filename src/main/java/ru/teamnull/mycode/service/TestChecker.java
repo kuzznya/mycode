@@ -5,6 +5,7 @@ import ru.teamnull.mycode.entity.CheckResult;
 import ru.teamnull.mycode.entity.Submission;
 import ru.teamnull.mycode.entity.Test;
 import ru.teamnull.mycode.model.SubmissionStatus;
+import ru.teamnull.mycode.util.Loader;
 
 import java.io.*;
 import java.util.List;
@@ -58,8 +59,10 @@ public class TestChecker extends Checker {
                     return SubmissionStatus.ML;
                 case 5:
                     return SubmissionStatus.TL;
-                default:
+                case 6:
                     return SubmissionStatus.RE;
+                default:
+                    return SubmissionStatus.UNKNOWN_ERROR;
             }
 
         } catch (IOException | InterruptedException e) {
@@ -105,5 +108,11 @@ public class TestChecker extends Checker {
                         .test(test)
                         .build()
                 );
+    }
+
+    static {
+        try {
+            Loader.loadNativeLibrary();
+        } catch (Exception ignored) { }
     }
 }

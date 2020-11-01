@@ -36,7 +36,8 @@ public class Task {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date deadline;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
     private List<Submission> submissions;
 
     private float timeLimit;

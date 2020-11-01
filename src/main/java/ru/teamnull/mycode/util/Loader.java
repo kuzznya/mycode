@@ -38,7 +38,7 @@ public class Loader {
         String name = getLibraryName();
 
         try {
-            NativeUtils.loadLibraryFromJar(name);
+            NativeUtils.loadLibraryFromJar("/libs/" + name);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
