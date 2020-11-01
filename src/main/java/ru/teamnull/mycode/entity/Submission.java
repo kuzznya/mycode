@@ -5,13 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.*;
 import ru.teamnull.mycode.model.Language;
 import ru.teamnull.mycode.model.SubmissionStatus;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -34,13 +35,15 @@ public class Submission {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String code;
     private Language language;
     @CreationTimestamp
     private Date timestamp;
     @Enumerated(EnumType.STRING)
     private SubmissionStatus status;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
     private List<CheckResult> checkResults;
     private int points;
 }
