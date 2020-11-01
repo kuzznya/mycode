@@ -26,16 +26,9 @@ public class TaskService {
     }
 
     public Task getById(UUID groupId, UUID taskId) {
-        Task task = taskRepository.findById(taskId)
+        return taskRepository.findById(taskId)
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        if(task.getGroups()
-                .stream()
-                .anyMatch(group -> group.getId().equals(groupId))) {
-            return task;
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
     }
 
     public Task addTask(UUID groupId, Task task) {

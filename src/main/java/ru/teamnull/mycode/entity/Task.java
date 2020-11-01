@@ -25,7 +25,8 @@ public class Task {
     @GeneratedValue
     private UUID id;
     private String name;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
     @JsonIgnore
     private List<Group> groups;
     private String problem;
