@@ -44,6 +44,7 @@ public class TaskService {
         List<Task> tasks = group.getTasks();
         tasks.add(task);
         group.setTasks(tasks);
+        groupRepository.save(group);
         return taskRepository.save(task);
     }
 
