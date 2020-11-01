@@ -44,8 +44,9 @@ public class TaskService {
         List<Task> tasks = group.getTasks();
         tasks.add(task);
         group.setTasks(tasks);
+        Task toReturn = taskRepository.save(task);
         groupRepository.save(group);
-        return taskRepository.save(task);
+        return toReturn;
     }
 
     public void deleteById(UUID id) {
