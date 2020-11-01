@@ -37,6 +37,8 @@ public class TaskService {
         List<Task> tasks = group.getTasks();
         tasks.add(task);
         group.setTasks(tasks);
+        for(var i : tasks)
+            i.setGroups(List.of(group));
         Task toReturn = taskRepository.save(task);
         groupRepository.save(group);
         return toReturn;
