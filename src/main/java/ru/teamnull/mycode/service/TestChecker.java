@@ -9,6 +9,7 @@ import ru.teamnull.mycode.util.Loader;
 
 import java.io.*;
 import java.util.List;
+import java.util.UUID;
 
 public class TestChecker extends Checker {
 
@@ -76,14 +77,14 @@ public class TestChecker extends Checker {
         Mono<File> inputFileMono = Mono.fromSupplier(() ->
                 FileUtils.createFile(
                         test.getInput(),
-                        super.submission.getId().toString() + "-" + index + "-input",
+                        UUID.randomUUID().toString() + "-" + index + "-input",
                         ".txt")
         );
 
         Mono<File> outputFileMono = Mono.fromSupplier(() ->
                 FileUtils.createFile(
                         test.getOutput(),
-                        super.submission.getId().toString() + "-" + index + "-output",
+                        UUID.randomUUID().toString() + "-" + index + "-output",
                         ".txt")
         );
 

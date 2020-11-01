@@ -191,6 +191,9 @@ test {
 bootRun {
     dependsOn("getCnativeExecutable", "getCppnativeSharedLibrary")
     jvmArgs += "-Djava.library.path=${project.buildDir}/libs"
-    jvmArgs += '-Dspring.profiles.active=dev'
+    jvmArgs += "-Dspring.datasource.url=jdbc:postgresql://ec2-52-31-94-195.eu-west-1.compute.amazonaws.com:5432/d70s5b8vniug86"
+    jvmArgs += "-Dspring.datasource.username=dkiirobbpupnsu"
+    jvmArgs += "-Dspring.datasource.password=0e83c96815abfcb5daa841c0b84c837627e88cba17984ee386714a7b53af8b08"
+//    jvmArgs += '-Dspring.profiles.active=dev'
 }
 

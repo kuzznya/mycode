@@ -8,6 +8,7 @@ import ru.teamnull.mycode.entity.CheckResult;
 import ru.teamnull.mycode.model.CheckType;
 
 import java.io.File;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 public abstract class Checker {
@@ -20,7 +21,7 @@ public abstract class Checker {
 
         this.codeFile = FileUtils.createFile(
                 submission.getCode(),
-                submission.getId().toString() + "-code",
+                UUID.randomUUID() + "-code",
                 submission.getLanguage().getExtension()
         );
     }
