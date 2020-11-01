@@ -1,7 +1,6 @@
 package ru.teamnull.mycode.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -35,7 +34,7 @@ public class TaskService {
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         group.getTasks().add(task);
-        task.getGroups().add(group);
+        task.setGroups(List.of(group));
         Task toReturn = taskRepository.save(task);
         groupRepository.save(group);
         return toReturn;
