@@ -47,6 +47,8 @@ void remove_dump(std::string& filename)
 JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
         (JNIEnv* env, jclass, jfloat tl, jint ml, jstring code_file, jstring input_file, jstring output_file)
 {
+    std::ofstream out("jni_log.txt");
+    
     const char* code_file_arg   = env->GetStringUTFChars(code_file, JNI_FALSE);
     const char* input_file_arg  = env->GetStringUTFChars(input_file, JNI_FALSE);
     const char* output_file_arg = env->GetStringUTFChars(output_file, JNI_FALSE);
@@ -71,20 +73,20 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
     std::string input   = input_file_arg_new;
     std::string output  = output_file_arg_new;
     
-    printf( "\n[DEBUG] program: %s\n", program.c_str() );
-    printf( "\n[DEBUG] time_limit: %f\n", time_limit );
-    printf( "\n[DEBUG] mem_limit: %d\n", mem_limit );
-    printf( "\n[DEBUG] input: %s\n", input.c_str() );
-    printf( "\n[DEBUG] output: %s\n", output.c_str() );
+    out << "\n[DEBUG] program: " << program << std::endl;
+    out << "\n[DEBUG] time_limit: " << time_limit << std::endl;
+    out << "\n[DEBUG] mem_limit: " << mem_limit << std::endl;
+    out << "\n[DEBUG] input: " << input << std::endl;
+    out << "\n[DEBUG] output: " << output << std::endl;
     
     std::string extension = program.substr(program.find_last_of('.') + 1);
 
     // Compilation
     std::string command;
     std::string solution = random_filename();
-    printf( "\n[DEBUG] solution: %s\n", solution.c_str() );
+    out << "\n[DEBUG] solution: " << solution << std::endl;
     std::string err_log  = random_filename();
-    printf( "\n[DEBUG] err_log: %s\n", err_log.c_str() );
+    out << "\n[DEBUG] err_log: " << err_log << std::endl;
     if (extension == "c" || extension == "cpp")
     {
         command = (extension == "c" ? "gcc " : "g++ ") +
@@ -96,7 +98,7 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
     }
     else
     {
-        printf("[ERROR] Wrong file extension. Aborting...\n");
+        out << "[ERROR] Wrong file extension. Aborting...\n";
         return 0;
     }
 
@@ -115,8 +117,9 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
     // Execution
     std::string verdict = random_filename();
     std::string result  = random_filename();
-    printf( "\n[DEBUG] verdict: %s\n", verdict.c_str() );
-    printf( "\n[DEBUG] result: %s\n", result.c_str() );
+    out << "\n[DEBUG] verdict: " << verdict << std::endl;
+    out << "\n[DEBUG] result: " << result << std::endl;
+    
     /*
     if (flag == "-std")
     {
@@ -136,16 +139,17 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
     //    command = "./sandbox --cpu " + std::to_string(time_limit) + " --mem " + std::to_string(mem_limit) + " --usage " + verdict + " --exec ./" + solution + " < " + input;
     //}
     system( command.c_str() );
-    printf( "\n[DEBUG] command: %s\n", command.c_str() );
+    out << "\n[DEBUG] command: " << command << std::endl;
 
     //debug
-    printf("\n[DEBUG] Input:\n");
+    out << "\n[DEBUG] Input:\n";
     command = "cat " + input;
+    
     system( command.c_str() );
-    printf("\n[DEBUG] Result:\n");
+    out << "\n[DEBUG] Result:\n";
     command = "cat " + result;
     system( command.c_str() );
-    printf("\n[DEBUG] Output:\n");
+    out << "\n[DEBUG] Output:\n";
     command = "cat " + output;
     system( command.c_str() );
     //debug
