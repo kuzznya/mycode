@@ -45,12 +45,13 @@ void remove_dump(std::string& filename)
 
 
 JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
-        (JNIEnv* env, jclass, jfloat tl, jint ml, jstring code_file, jstring input_file, jstring output_file)
+        (JNIEnv* env, jclass, jstring path, jfloat tl, jint ml, jstring code_file, jstring input_file, jstring output_file)
 {
     std::ofstream out("/Users/kuzznya/jni_log.txt");
     
-    const char* code_file_arg   = env->GetStringUTFChars(code_file, JNI_FALSE);
-    const char* input_file_arg  = env->GetStringUTFChars(input_file, JNI_FALSE);
+    const char* sandbox_arg     = env->GetStringUTFChars(path,        JNI_FALSE);
+    const char* code_file_arg   = env->GetStringUTFChars(code_file,   JNI_FALSE);
+    const char* input_file_arg  = env->GetStringUTFChars(input_file,  JNI_FALSE);
     const char* output_file_arg = env->GetStringUTFChars(output_file, JNI_FALSE);
 
 //    char code_file_arg_new[256];
@@ -65,14 +66,15 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
 //    env->ReleaseStringUTFChars(input_file,  input_file_arg);
 //    env->ReleaseStringUTFChars(output_file, output_file_arg);
 
-    std::string sandbox = "cnative";
-    std::string program = code_file_arg;
+    std::string sandbox = sandbox_arg;
+    std::string program = sandbox + "/" + code_file_arg;
     float time_limit    = tl;
     int mem_limit       = ml;
     std::string flag    = "-std";
     std::string input   = input_file_arg;
     std::string output  = output_file_arg;
     
+    out << "\n[DEBUG] sandbox: " << sandbox << std::endl;
     out << "\n[DEBUG] program: " << program << std::endl;
     out << "\n[DEBUG] time_limit: " << time_limit << std::endl;
     out << "\n[DEBUG] mem_limit: " << mem_limit << std::endl;
@@ -132,7 +134,7 @@ JNIEXPORT jint JNICALL Java_ru_teamnull_mycode_service_TestChecker_testCheck
     */
 
     //if (true) { // check if it is file input or stdin
-    command = "cat " + input + " | ./" + sandbox + " --cpu " +
+    command = "cat " + input + " | ./" + sandbox + "/cnative --cpu " +
             std::to_string(time_limit) + " --mem " + std::to_string(mem_limit) +
             " --usage " + verdict + " --exec ./" + solution + " > " + result;
     //} else {
