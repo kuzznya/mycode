@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Type;
 import org.springframework.core.annotation.Order;
 import ru.teamnull.mycode.model.PostprocessorType;
 import ru.teamnull.mycode.model.CheckType;
@@ -30,6 +31,7 @@ public class Task {
     @JsonIgnore
     private List<Group> groups;
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String problem;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(FetchMode.SELECT)
