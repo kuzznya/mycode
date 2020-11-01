@@ -45,14 +45,7 @@ public class SubmissionController {
     }
 
     @GetMapping
-    public List<Submission> getSubmissions(UserDetails userDetails) {
-        if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("STUDENT"))) {
-            userRepository
-                    .findByUsername(userDetails.getUsername())
-                    .ifPresentOrElse(
-                    user -> submissionService.getSubmissions(),
-                    submissionService::getSubmissions);
-        }
+    public List<Submission> getSubmissions() {
         return submissionService.getSubmissions();
     }
 
@@ -68,7 +61,6 @@ public class SubmissionController {
                                @RequestBody SubmissionRequest request) {
         return submissionService
                 .submit(taskId, request.getLanguage(), request.getCode())
-                .map(this::resultToJson)
-                .delayElements(Duration.ofMillis(500));
+                .map(this::resultToJson);
     }
 }
